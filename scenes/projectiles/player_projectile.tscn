@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://b41cne8mj356x"]
+
+[ext_resource type="Texture2D" uid="uid://w2vgkmpbeljq" path="res://sprites/projectiles/Pure_11.png" id="1_1gutn"]
+[ext_resource type="Script" path="res://scenes/projectiles/player_projectile.gd" id="1_n2f2e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wf0bn"]
+radius = 26.0
+height = 84.0
+
+[node name="PlayerProjectile" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("1_n2f2e")
+
+[node name="PlayerProjectileSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_1gutn")
+
+[node name="PlayerProjectileCollision" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_wf0bn")
+
+[node name="PlayerProjectileLifetime" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="PlayerProjectileLifetime" to="." method="_on_player_projectile_lifetime_timeout"]

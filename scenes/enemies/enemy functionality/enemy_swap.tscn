@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwxba8nn6fryb"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy functionality/enemy_swap.gd" id="1_ryd0h"]
+
+[node name="EnemySwap" type="Node2D"]
+script = ExtResource("1_ryd0h")

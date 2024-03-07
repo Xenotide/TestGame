@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvvnr2fbbr2fq"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemies spinout/charger_spinout.gd" id="1_6nq1t"]
+[ext_resource type="Texture2D" uid="uid://bw7rec5ssoht7" path="res://sprites/enemies/charger.png" id="1_i0f61"]
+[ext_resource type="PackedScene" uid="uid://cevy6bcodvm7w" path="res://scenes/general functionality/health_component.tscn" id="3_uwgb1"]
+[ext_resource type="PackedScene" uid="uid://dmgtllvplmrds" path="res://scenes/enemies/enemy functionality/enemy_type.tscn" id="4_3v8vx"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fjgcd"]
+friction = 0.3
+bounce = 0.8
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yyy35"]
+size = Vector2(159.5, 126)
+
+[node name="Charger Spinout" type="RigidBody2D" groups=["Enemy", "SpinoutEnemy"]]
+collision_layer = 16
+collision_mask = 31
+physics_material_override = SubResource("PhysicsMaterial_fjgcd")
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
+linear_damp = 1.0
+script = ExtResource("1_6nq1t")
+
+[node name="EntitySprite" type="Sprite2D" parent="."]
+position = Vector2(-1, 1)
+rotation = 3.14159
+texture = ExtResource("1_i0f61")
+
+[node name="EntityCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yyy35")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_uwgb1")]
+
+[node name="EnemyType" parent="." instance=ExtResource("4_3v8vx")]
+enemy_type = "charger_spinout"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="sleeping_state_changed" from="." to="." method="_on_sleeping_state_changed"]

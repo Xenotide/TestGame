@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://bvvnr2fbbr2fq"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemies spinout/charger_spinout.gd" id="1_6nq1t"]
+[ext_resource type="Texture2D" uid="uid://bw7rec5ssoht7" path="res://sprites/enemies/charger.png" id="1_i0f61"]
+[ext_resource type="PackedScene" uid="uid://cevy6bcodvm7w" path="res://scenes/general functionality/health_component.tscn" id="3_uwgb1"]
+[ext_resource type="PackedScene" uid="uid://dmgtllvplmrds" path="res://scenes/enemies/enemy functionality/enemy_type.tscn" id="4_3v8vx"]
+[ext_resource type="PackedScene" uid="uid://bkbuaryec71dj" path="res://scenes/general functionality/explosion.tscn" id="5_p6ii8"]
+[ext_resource type="PackedScene" uid="uid://ehu144thtmc4" path="res://scenes/general functionality/explosion_sound.tscn" id="6_i0rtg"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fjgcd"]
+friction = 0.3
+bounce = 0.8
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g1p8r"]
+radius = 57.0
+height = 154.0
+
+[node name="Charger Spinout" type="RigidBody2D" groups=["Enemy", "SpinoutEnemy"]]
+collision_layer = 16
+collision_mask = 63
+physics_material_override = SubResource("PhysicsMaterial_fjgcd")
+gravity_scale = 0.0
+continuous_cd = 1
+max_contacts_reported = 5
+contact_monitor = true
+script = ExtResource("1_6nq1t")
+
+[node name="SpinoutSprite" type="Sprite2D" parent="."]
+position = Vector2(-1, 1)
+rotation = 3.14159
+texture = ExtResource("1_i0f61")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_g1p8r")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_uwgb1")]
+
+[node name="EnemyType" parent="." instance=ExtResource("4_3v8vx")]
+enemy_type = "charger spinout"
+
+[node name="Explosion" parent="." instance=ExtResource("5_p6ii8")]
+visible = false
+scale = Vector2(5, 5)
+
+[node name="ExplosionSound" parent="." instance=ExtResource("6_i0rtg")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="sleeping_state_changed" from="." to="." method="_on_sleeping_state_changed"]
+[connection signal="hit_zero_health" from="HealthComponent" to="." method="_on_health_component_hit_zero_health"]

@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://dn0x1un6e6m1t"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemies spinout/shooter_spinout.gd" id="1_e0vi6"]
+[ext_resource type="PackedScene" uid="uid://cevy6bcodvm7w" path="res://scenes/general functionality/health_component.tscn" id="1_qhm46"]
+[ext_resource type="PackedScene" uid="uid://dmgtllvplmrds" path="res://scenes/enemies/enemy functionality/enemy_type.tscn" id="2_a3oo4"]
+[ext_resource type="PackedScene" uid="uid://bkbuaryec71dj" path="res://scenes/general functionality/explosion.tscn" id="4_p17k7"]
+[ext_resource type="PackedScene" uid="uid://ehu144thtmc4" path="res://scenes/general functionality/explosion_sound.tscn" id="5_p4gj8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7p1ru"]
+friction = 0.3
+bounce = 0.8
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sec0m"]
+load_path = "res://.godot/imported/shooter.png-160b8d5fa917001f31c8bb43246b0f9b.ctex"
+
+[node name="Shooter Spinout" type="RigidBody2D" groups=["Enemy", "SpinoutEnemy"]]
+collision_layer = 16
+collision_mask = 63
+physics_material_override = SubResource("PhysicsMaterial_7p1ru")
+gravity_scale = 0.0
+continuous_cd = 1
+max_contacts_reported = 5
+contact_monitor = true
+script = ExtResource("1_e0vi6")
+
+[node name="ShooterSprite" type="Sprite2D" parent="."]
+texture = SubResource("CompressedTexture2D_sec0m")
+
+[node name="Hitbox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(72, 67, -81, 67, -94, 49, -93, 26, -83, 21, -83, -20, -94, -26, -94, -50, -84, -67, 71, -67, 79, -39, 71, -9, 71, 11, 78, 42)
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_qhm46")]
+starting_health = 2
+
+[node name="EnemyType" parent="." instance=ExtResource("2_a3oo4")]
+enemy_type = "shooter spinout"
+
+[node name="Explosion" parent="." instance=ExtResource("4_p17k7")]
+visible = false
+scale = Vector2(5, 5)
+
+[node name="ExplosionSound" parent="." instance=ExtResource("5_p4gj8")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="sleeping_state_changed" from="." to="." method="_on_sleeping_state_changed"]
+[connection signal="hit_zero_health" from="HealthComponent" to="." method="_on_health_component_hit_zero_health"]

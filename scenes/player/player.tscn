@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://bm1nb1jtvuswm"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_mw1ra"]
+[ext_resource type="Texture2D" uid="uid://3x86iweivd43" path="res://sprites/player/Pyro.png" id="3_0567l"]
+[ext_resource type="PackedScene" uid="uid://cevy6bcodvm7w" path="res://scenes/general functionality/health_component.tscn" id="3_gns85"]
+[ext_resource type="PackedScene" uid="uid://bkbuaryec71dj" path="res://scenes/general functionality/explosion.tscn" id="4_i3u55"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eglao"]
+radius = 49.0
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_mask = 7
+script = ExtResource("1_mw1ra")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+position = Vector2(32, 3)
+rotation = 1.5708
+texture = ExtResource("3_0567l")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_eglao")
+
+[node name="AttackSpawn" type="Marker2D" parent="."]
+position = Vector2(96, 19)
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_gns85")]
+
+[node name="AttackTimeout" type="Timer" parent="."]
+one_shot = true
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+
+[node name="Explosion" parent="." instance=ExtResource("4_i3u55")]
+visible = false
+scale = Vector2(4, 4)
+
+[connection signal="hit_zero_health" from="HealthComponent" to="." method="_on_health_component_hit_zero_health"]
+[connection signal="timeout" from="AttackTimeout" to="." method="_on_attack_timeout_timeout"]

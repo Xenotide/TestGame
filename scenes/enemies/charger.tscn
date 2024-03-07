@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://d0epejmm8gtgk"]
+
+[ext_resource type="Script" path="res://scenes/enemies/charger.gd" id="2_ocn6v"]
+[ext_resource type="Texture2D" uid="uid://bw7rec5ssoht7" path="res://sprites/enemies/charger.png" id="3_aadnr"]
+[ext_resource type="PackedScene" uid="uid://dmgtllvplmrds" path="res://scenes/enemies/enemy functionality/enemy_type.tscn" id="4_bmvs5"]
+[ext_resource type="PackedScene" uid="uid://cevy6bcodvm7w" path="res://scenes/general functionality/health_component.tscn" id="4_iht8q"]
+[ext_resource type="PackedScene" uid="uid://bkbuaryec71dj" path="res://scenes/general functionality/explosion.tscn" id="6_7pwft"]
+[ext_resource type="PackedScene" uid="uid://ehu144thtmc4" path="res://scenes/general functionality/explosion_sound.tscn" id="6_lkql4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p40el"]
+radius = 57.0
+height = 154.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ckn8w"]
+radius = 65.0
+height = 165.0
+
+[node name="Charger" type="CharacterBody2D" groups=["Enemy", "NormalEnemy"]]
+collision_layer = 2
+collision_mask = 31
+script = ExtResource("2_ocn6v")
+
+[node name="ChargerSprite" type="Sprite2D" parent="."]
+rotation = 3.14159
+texture = ExtResource("3_aadnr")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_p40el")
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_iht8q")]
+
+[node name="EnemyType" parent="." instance=ExtResource("4_bmvs5")]
+enemy_type = "charger"
+
+[node name="Explosion" parent="." instance=ExtResource("6_7pwft")]
+visible = false
+scale = Vector2(5, 5)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="NavigationUpdate" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ckn8w")
+
+[node name="ExplosionSound" parent="." instance=ExtResource("6_lkql4")]
+
+[connection signal="hit_zero_health" from="HealthComponent" to="." method="_on_health_component_hit_zero_health"]
+[connection signal="timeout" from="NavigationUpdate" to="." method="_on_navigation_update_timeout"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

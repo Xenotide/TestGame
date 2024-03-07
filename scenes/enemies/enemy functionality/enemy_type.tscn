@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmgtllvplmrds"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy functionality/enemy_type.gd" id="1_20kv7"]
+
+[node name="EnemyType" type="Node2D"]
+script = ExtResource("1_20kv7")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=7 format=3 uid="uid://clmbuodvsffjc"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy functionality/enemy_collection.gd" id="1_s51ng"]
+[ext_resource type="PackedScene" uid="uid://d0epejmm8gtgk" path="res://scenes/enemies/charger.tscn" id="2_8xgdw"]
+[ext_resource type="PackedScene" uid="uid://dhi27aviq4lcc" path="res://scenes/enemies/shooter.tscn" id="2_b86tu"]
+[ext_resource type="PackedScene" uid="uid://dn0x1un6e6m1t" path="res://scenes/enemies/enemies spinout/shooter_spinout.tscn" id="3_rb5bt"]
+[ext_resource type="PackedScene" uid="uid://bvvnr2fbbr2fq" path="res://scenes/enemies/enemies spinout/charger_spinout.tscn" id="3_w4g3s"]
+[ext_resource type="PackedScene" uid="uid://b6v2wme2l1m4r" path="res://scenes/projectiles/shooter_projectile.tscn" id="6_o2tcj"]
+
+[node name="Enemy Collection" type="Node2D"]
+script = ExtResource("1_s51ng")
+charger_normal_scene = ExtResource("2_8xgdw")
+charger_spinout_scene = ExtResource("3_w4g3s")
+shooter_normal_scene = ExtResource("2_b86tu")
+shooter_spinout_scene = ExtResource("3_rb5bt")
+shooter_projectile_scene = ExtResource("6_o2tcj")

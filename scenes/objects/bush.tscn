@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxid7wujc6wuw"]
+
+[ext_resource type="Texture2D" uid="uid://buhvdkbkgsgq4" path="res://sprites/flora/foliage7.png" id="1_g8iw3"]
+
+[node name="Bush" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_g8iw3")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-2, 30, -30, 9, -32, -23, -18, -36, -13, -30, 23, -27, 31, -17, 31, -1, 25, 9, 30, 28)

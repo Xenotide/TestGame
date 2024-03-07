@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdgbo4ygsswa0"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy functionality/enemy_spawn_point.gd" id="1_cqlfh"]
+[ext_resource type="Texture2D" uid="uid://dmen00dbj4372" path="res://sprites/buildings/Platform.png" id="1_enga5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iyw5s"]
+radius = 270.067
+
+[node name="Enemy Spawn Point" type="Node2D" groups=["Spawn Point"]]
+script = ExtResource("1_cqlfh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.3, 1.3)
+texture = ExtResource("1_enga5")
+
+[node name="SpawnLocation" type="Marker2D" parent="."]
+
+[node name="NoSpawnArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 19
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NoSpawnArea"]
+shape = SubResource("CircleShape2D_iyw5s")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

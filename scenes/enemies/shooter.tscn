@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://dhi27aviq4lcc"]
+
+[ext_resource type="Script" path="res://scenes/enemies/shooter.gd" id="1_7x61g"]
+[ext_resource type="Texture2D" uid="uid://epj0k2gtrmg4" path="res://sprites/enemies/shooter.png" id="1_b3n6h"]
+[ext_resource type="PackedScene" uid="uid://dmgtllvplmrds" path="res://scenes/enemies/enemy functionality/enemy_type.tscn" id="3_8agai"]
+[ext_resource type="PackedScene" uid="uid://cevy6bcodvm7w" path="res://scenes/general functionality/health_component.tscn" id="4_vyapu"]
+[ext_resource type="PackedScene" uid="uid://bkbuaryec71dj" path="res://scenes/general functionality/explosion.tscn" id="5_c30o4"]
+[ext_resource type="PackedScene" uid="uid://ehu144thtmc4" path="res://scenes/general functionality/explosion_sound.tscn" id="6_hm17y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mp1wc"]
+radius = 900.0
+
+[node name="Shooter" type="CharacterBody2D" groups=["Enemy", "NormalEnemy", "Shooter"]]
+collision_layer = 2
+collision_mask = 31
+script = ExtResource("1_7x61g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_b3n6h")
+
+[node name="Hitbox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(72, 67, -81, 67, -94, 49, -93, 26, -83, 21, -83, -20, -94, -26, -94, -50, -84, -67, 71, -67, 79, -39, 71, -9, 71, 11, 78, 42)
+
+[node name="HealthComponent" parent="." instance=ExtResource("4_vyapu")]
+starting_health = 2
+
+[node name="EnemyType" parent="." instance=ExtResource("3_8agai")]
+enemy_type = "shooter"
+
+[node name="AttackSpawn" type="Marker2D" parent="."]
+position = Vector2(104, 0)
+
+[node name="AttackRadius" type="Area2D" parent="."]
+collision_layer = 0
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRadius"]
+shape = SubResource("CircleShape2D_mp1wc")
+
+[node name="Explosion" parent="." instance=ExtResource("5_c30o4")]
+visible = false
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="NavigationUpdate" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="TargetingRay" type="RayCast2D" parent="."]
+modulate = Color(0.603922, 0.14902, 0.223529, 1)
+position = Vector2(73, -66)
+collision_mask = 4
+hit_from_inside = true
+
+[node name="TargetingRay2" type="RayCast2D" parent="."]
+modulate = Color(0.603922, 0.14902, 0.223529, 1)
+position = Vector2(76, 64)
+collision_mask = 4
+hit_from_inside = true
+
+[node name="ExplosionSound" parent="." instance=ExtResource("6_hm17y")]
+
+[connection signal="hit_zero_health" from="HealthComponent" to="." method="_on_health_component_hit_zero_health"]
+[connection signal="body_entered" from="AttackRadius" to="." method="_on_attack_radius_body_entered"]
+[connection signal="body_exited" from="AttackRadius" to="." method="_on_attack_radius_body_exited"]
+[connection signal="timeout" from="NavigationUpdate" to="." method="_on_navigation_update_timeout"]

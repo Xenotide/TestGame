@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ehu144thtmc4"]
+
+[ext_resource type="AudioStream" uid="uid://dyqjcmj2ihic6" path="res://music/fireball-whoosh-2-179126.mp3" id="1_tcmvh"]
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_tcmvh")
+volume_db = -10.0

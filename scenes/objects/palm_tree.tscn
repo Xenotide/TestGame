@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjjqcnkialuxp"]
+
+[ext_resource type="Texture2D" uid="uid://bq4vxxavfop6o" path="res://sprites/flora/palmtree1.png" id="1_8ieso"]
+
+[node name="PalmTree" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8ieso")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(30, 54, 45, 48, 52, 33, 44, 12, 66, 2, 66, -6, 64, -21, 30, -27, 27, -55, -4, -62, -36, -52, -61, -21, -59, 10, -46, 34, -27, 38, -24, 58, 2, 64)
